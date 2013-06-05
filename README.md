@@ -1,17 +1,3 @@
-## Big Brothapp 
-
-This an implementation of the Twitter social network in the [Speech]
-(http://speechlang.org) programming language. The purpose of this
-implementation is simply to illustrate how the *functional
-requirements* of typical Web 2.0 apps can be programmed in
-Speech. Thus, we abstract away from non-functional concerns relating
-to the persistence, presentation and web layers, and focus instead on
-the business logic of Twitter. You can find explanations on the design
-of this app in the Speech [user
-guide](http://speechlang.org). Currently, the implementation is far
-from being complete, but it will eventually cover the 100% of these
-requirements. We promise!
-
 ## What is Big Brothapp?
 
 Big Brothapp is a reality game show whose premise is a group of
