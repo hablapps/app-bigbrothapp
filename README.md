@@ -41,7 +41,8 @@ the winner for the particular series and receives the prize.
 
 ## Run Online
 
-Follow the instructions on [speechlang.org](http://speechlang.org/apps.php)
+Follow the instructions on the [apps](http://speechlang.org/apps.php)
+section from speechlang.org.
 
 ## Compilation
 
