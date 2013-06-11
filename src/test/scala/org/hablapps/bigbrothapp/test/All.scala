@@ -21,12 +21,9 @@ import org.scalatest.Suite
 import org.scalatest.Suites
 import org.scalatest.FunSuite
 import org.scalatest.matchers.ShouldMatchers
-import org.junit.runner.RunWith
 import scala.collection.immutable.HashSet
 import scala.collection.immutable.HashMap
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
 class All extends Suites(
   new Bye(new BigBrothappSystem),
   new Deployment(new BigBrothappSystem),

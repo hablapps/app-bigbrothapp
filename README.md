@@ -50,7 +50,7 @@ download it first. Follow the instructions at <http://scala-lang.org>.
 
 #### Install sbt 
 
-The app-twitter project is configured with the sbt build tool. To
+The app-bigbrothapp project is configured with the sbt build tool. To
 install sbt follow the instructions at <https://github.com/sbt/sbt>.
 
 #### Install speech 
@@ -59,7 +59,7 @@ Download the Speech interpreter from the following address:
 <http://speechlang.org>. Then, simply create a `<bigbrothapp>/lib`
 directory, and install there the `speech.jar` archive.
 
-#### Compile twitter 
+#### Compile bigbrothapp
 
 ```shell
 $ cd <bigbrothapp>

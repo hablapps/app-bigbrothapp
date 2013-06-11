@@ -17,7 +17,7 @@
 package org.hablapps.bigbrothapp
 
 import language.reflectiveCalls
-import org.hablapps.{updatable,react,speech}
+import org.hablapps.{ updatable, react, speech }
 import updatable._
 import react._
 
@@ -40,6 +40,9 @@ object BigBrothapp {
       type Action = Nothing
 
       val winner: Option[$[Contestant]]
+
+      def house = subinteraction.alias[House].head
+      def audience = subinteraction.alias[Audience].head
     }
 
     implicit val BigBrothapp = builder[BigBrothapp]

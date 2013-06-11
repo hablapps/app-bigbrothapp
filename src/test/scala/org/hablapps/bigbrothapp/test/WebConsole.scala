@@ -23,6 +23,8 @@ import speech.web
 object WebConsole extends App {
 
   object System extends web.PlainSystem with bigbrothapp.BigBrothappProgram {
+    longPollingWaitTime = 15000
+
     applicationFilesPath = "/home/jlopez/indigo/workspace-trunk/SPEECH-WEB/src/org/hablapps/speech/web/js/console/"
 
     val Output(habla) = reset(for {
