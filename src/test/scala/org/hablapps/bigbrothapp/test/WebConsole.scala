@@ -25,21 +25,21 @@ object WebConsole extends App {
   object System extends web.PlainSystem with bigbrothapp.BigBrothappProgram {
     longPollingWaitTime = 15000
 
-    applicationFilesPath = "/home/jlopez/indigo/workspace-trunk/SPEECH-WEB/src/org/hablapps/speech/web/js/console/"
+    applicationFilesPath = "static/"
 
     val Output(habla) = reset(for {
       sea <- Initiate(BigBrothapp().name += "bigBrothapp");
       hou <- Initiate(House().name += "house", sea);
       aud <- Initiate(Audience().name += "audience", sea);
-      leonardo <- Play(Contestant().name += "leonardo", sea);
-      raphael <- Play(Contestant().name += "raphael", sea);
-      redRanger <- Play(Contestant().name += "redRanger", sea);
-      shredder <- Play(Contestant().name += "shredder", sea);
-      brotha <- Play(BigBrotha().name += "bigBrotha", hou);
-      leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou);
-      rapAtHouse <- Play(Housemate().name += "raphael", raphael, hou);
-      redAtHouse <- Play(Housemate().name += "redRanger", redRanger, hou);
-      shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou);
+      red <- Play(Contestant().name += "red", sea);
+      blue <- Play(Contestant().name += "blue", sea);
+      green <- Play(Contestant().name += "green", sea);
+      yellow <- Play(Contestant().name += "yellow", sea);
+      brotha <- Play(BigBrotha().name += "brotha", hou);
+      redAtHouse <- Play(Housemate().name += "red", red, hou);
+      blueAtHouse <- Play(Housemate().name += "blue", blue, hou);
+      greenAtHouse <- Play(Housemate().name += "green", green, hou);
+      yellowAtHouse <- Play(Housemate().name += "yellow", yellow, hou);
       _ <- Play(Viewer().name += "viewer1", aud);
       _ <- Play(Viewer().name += "viewer2", aud);
       _ <- Play(Viewer().name += "viewer3", aud)
