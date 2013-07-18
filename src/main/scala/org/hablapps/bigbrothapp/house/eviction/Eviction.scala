@@ -83,13 +83,13 @@ object Eviction {
 
     // This is not working at all!
     //
-    // declarer[BigBrotha].of[Eviction](Eviction._substatus)
-    //   .empowered {
-    //     case _ => implicit state => false
-    //   }
-    //   .permitted {
-    //     case _ => implicit state => Some(true)
-    //   }
+    declarer[BigBrotha].of[Eviction](Eviction._substatus)
+      .empowered {
+        case _ => implicit state => true
+      }
+      .permitted {
+        case _ => implicit state => Some(true)
+      }
 
     when {
       case _Set(e: $[Eviction], Eviction._substatus, CountingUp, true) => {

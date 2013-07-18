@@ -25,6 +25,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.hablapps.updatable._
 import org.hablapps.react
 import org.hablapps.speech
+import speech._
 import org.hablapps.bigbrothapp._
 
 class Winner(sys: speech.System with BigBrothappProgram with react.Debug) extends FunSpec with ShouldMatchers with BeforeAndAfter {
@@ -41,21 +42,21 @@ class Winner(sys: speech.System with BigBrothappProgram with react.Debug) extend
       vw3: $[Viewer],
       leoNomination: $[Nomination],
       shrNomination: $[Nomination]) = reset(for {
-        sea <- Initiate(BigBrothapp());
-        hou <- Initiate(House(), sea);
-        aud <- Initiate(Audience(), sea);
-        leonardo <- Play(Contestant().name += "leonardo", sea);
-        shredder <- Play(Contestant().name += "shredder", sea);
-        brotha <- Play(BigBrotha(), hou);
-        leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou);
-        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou);
-        vw1 <- Play(Viewer(), aud);
-        vw2 <- Play(Viewer(), aud);
-        vw3 <- Play(Viewer(), aud);
-        evict <- Initiate(Eviction().substatus += Polling, hou);
-        leoNomination <- Initiate(Nomination().name += "leonardo", evict);
-        _ <- Play3(Nominee().name += "leonardo", leoAtHouse, leoNomination);
-        shrNomination <- Initiate(Nomination().name += "shredder", evict);
+        sea <- Initiate(BigBrothapp())
+        hou <- Initiate(House(), sea)
+        aud <- Initiate(Audience(), sea)
+        leonardo <- Play(Contestant().name += "leonardo", sea)
+        shredder <- Play(Contestant().name += "shredder", sea)
+        brotha <- Play(BigBrotha(), hou)
+        leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou)
+        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou)
+        vw1 <- Play(Viewer(), aud)
+        vw2 <- Play(Viewer(), aud)
+        vw3 <- Play(Viewer(), aud)
+        evict <- Initiate(Eviction().substatus += Polling, hou)
+        leoNomination <- Initiate(Nomination().name += "leonardo", evict)
+        _ <- Play3(Nominee().name += "leonardo", leoAtHouse, leoNomination)
+        shrNomination <- Initiate(Nomination().name += "shredder", evict)
         _ <- Play3(Nominee().name += "shredder", shrAtHouse, shrNomination)
       } yield (brotha, evict, vw1, vw2, vw3, leoNomination, shrNomination))
 
@@ -86,20 +87,20 @@ class Winner(sys: speech.System with BigBrothappProgram with react.Debug) extend
         evict))
 
       reset(for {
-        sea <- Initiate(BigBrothapp());
-        hou <- Initiate(House(), sea);
-        aud <- Initiate(Audience(), sea);
-        leonardo <- Play(Contestant().name += "leonardo", sea);
-        shredder <- Play(Contestant().name += "shredder", sea);
-        brotha <- Play(BigBrotha(), hou);
-        leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou);
-        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou);
-        vw1 <- Play(Viewer(), aud);
-        vw2 <- Play(Viewer(), aud);
-        vw3 <- Play(Viewer(), aud);
-        _ <- Abandon(leoAtHouse);
-        _ <- Abandon(shrAtHouse);
-        _ <- sea.winner /+ shredder
+        sea <- Initiate(BigBrothapp().date_updated += default_date)
+        hou <- Initiate(House().date_updated += default_date, sea)
+        aud <- Initiate(Audience(), sea)
+        leonardo <- Play((Contestant().name += "leonardo").date_updated += default_date, sea)
+        shredder <- Play((Contestant().name += "shredder").date_updated += default_date, sea)
+        brotha <- Play(BigBrotha().date_updated += default_date, hou)
+        leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou)
+        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou)
+        vw1 <- Play(Viewer().date_updated += default_date, aud)
+        vw2 <- Play(Viewer().date_updated += default_date, aud)
+        vw3 <- Play(Viewer().date_updated += default_date, aud)
+        _ <- Abandon(leoAtHouse)
+        _ <- Abandon(shrAtHouse)
+        _ <- Let(sea.winner += shredder)
       } yield ())
 
 	    obtained should be(getState)

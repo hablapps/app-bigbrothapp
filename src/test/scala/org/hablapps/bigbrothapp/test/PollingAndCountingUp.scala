@@ -25,6 +25,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.hablapps.updatable._
 import org.hablapps.react
 import org.hablapps.speech
+import speech._
 import org.hablapps.bigbrothapp._
 
 class PollingAndCountingUp(sys: speech.System with BigBrothappProgram with react.Debug) extends FunSpec with ShouldMatchers with BeforeAndAfter {
@@ -41,25 +42,25 @@ class PollingAndCountingUp(sys: speech.System with BigBrothappProgram with react
       vw3: $[Viewer],
       redNomination: $[Nomination],
       shrNomination: $[Nomination]) = reset(for {
-        sea <- Initiate(BigBrothapp());
-        hou <- Initiate(House(), sea);
-        aud <- Initiate(Audience(), sea);
-        leonardo <- Play(Contestant().name += "leonardo", sea);
-        raphael <- Play(Contestant().name += "raphael", sea);
-        redRanger <- Play(Contestant().name += "redRanger", sea);
-        shredder <- Play(Contestant().name += "shredder", sea);
-        brotha <- Play(BigBrotha(), hou);
-        _ <- Play(Housemate().name += "leonardo", leonardo, hou);
-        _ <- Play(Housemate().name += "raphael", raphael, hou);
-        redAtHouse <- Play(Housemate().name += "redRanger", redRanger, hou);
-        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou);
-        vw1 <- Play(Viewer(), aud);
-        vw2 <- Play(Viewer(), aud);
-        vw3 <- Play(Viewer(), aud);
-        evict <- Initiate(Eviction().substatus += Polling, hou);
-        redNomination <- Initiate(Nomination().name += "redRanger", evict);
-        _ <- Play3(Nominee().name += "redRanger", redAtHouse, redNomination);
-        shrNomination <- Initiate(Nomination().name += "shredder", evict);
+        sea <- Initiate(BigBrothapp())
+        hou <- Initiate(House(), sea)
+        aud <- Initiate(Audience(), sea)
+        leonardo <- Play(Contestant().name += "leonardo", sea)
+        raphael <- Play(Contestant().name += "raphael", sea)
+        redRanger <- Play(Contestant().name += "redRanger", sea)
+        shredder <- Play(Contestant().name += "shredder", sea)
+        brotha <- Play(BigBrotha(), hou)
+        _ <- Play(Housemate().name += "leonardo", leonardo, hou)
+        _ <- Play(Housemate().name += "raphael", raphael, hou)
+        redAtHouse <- Play(Housemate().name += "redRanger", redRanger, hou)
+        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou)
+        vw1 <- Play(Viewer(), aud)
+        vw2 <- Play(Viewer(), aud)
+        vw3 <- Play(Viewer(), aud)
+        evict <- Initiate(Eviction().substatus += Polling, hou)
+        redNomination <- Initiate(Nomination().name += "redRanger", evict)
+        _ <- Play3(Nominee().name += "redRanger", redAtHouse, redNomination)
+        shrNomination <- Initiate(Nomination().name += "shredder", evict)
         _ <- Play3(Nominee().name += "shredder", shrAtHouse, shrNomination)
       } yield (brotha, evict, vw1, vw2, vw3, redNomination, shrNomination))
 
@@ -89,24 +90,22 @@ class PollingAndCountingUp(sys: speech.System with BigBrothappProgram with react
         brotha,
         evict))
 
-      //println(obtained)
-
       reset(for {
-        sea <- Initiate(BigBrothapp());
-        hou <- Initiate(House(), sea);
-        aud <- Initiate(Audience(), sea);
-        leonardo <- Play(Contestant().name += "leonardo", sea);
-        raphael <- Play(Contestant().name += "raphael", sea);
-        redRanger <- Play(Contestant().name += "redRanger", sea);
-        shredder <- Play(Contestant().name += "shredder", sea);
-        brotha <- Play(BigBrotha(), hou);
-        _ <- Play(Housemate().name += "leonardo", leonardo, hou);
-        _ <- Play(Housemate().name += "raphael", raphael, hou);
-        redAtHouse <- Play(Housemate().name += "redRanger", redRanger, hou);
-        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou);
-        vw1 <- Play(Viewer(), aud);
-        vw2 <- Play(Viewer(), aud);
-        vw3 <- Play(Viewer(), aud);
+        sea <- Initiate(BigBrothapp())
+        hou <- Initiate(House().date_updated += default_date, sea)
+        aud <- Initiate(Audience(), sea)
+        leonardo <- Play(Contestant().name += "leonardo", sea)
+        raphael <- Play(Contestant().name += "raphael", sea)
+        redRanger <- Play((Contestant().name += "redRanger").date_updated += default_date, sea)
+        shredder <- Play(Contestant().name += "shredder", sea)
+        brotha <- Play(BigBrotha().date_updated += default_date, hou)
+        _ <- Play(Housemate().name += "leonardo", leonardo, hou)
+        _ <- Play(Housemate().name += "raphael", raphael, hou)
+        redAtHouse <- Play(Housemate().name += "redRanger", redRanger, hou)
+        shrAtHouse <- Play((Housemate().name += "shredder").date_updated += default_date, shredder, hou)
+        vw1 <- Play(Viewer().date_updated += default_date, aud)
+        vw2 <- Play(Viewer().date_updated += default_date, aud)
+        vw3 <- Play(Viewer().date_updated += default_date, aud)
         _ <- Abandon(redAtHouse)
       } yield ())
 

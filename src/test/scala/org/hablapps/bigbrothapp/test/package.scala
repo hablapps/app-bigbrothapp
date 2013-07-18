@@ -17,9 +17,12 @@
 package org.hablapps.bigbrothapp.test
 
 import org.hablapps.react
+import org.hablapps.speech._
 import org.hablapps.bigbrothapp.BigBrothappProgram
 
 object `package` {
 
-  class BigBrothappSystem extends BigBrothappProgram with react.Debug
+  class BigBrothappSystem extends BigBrothappProgram with react.Debug {
+    date = () => default_date
+  }
 }

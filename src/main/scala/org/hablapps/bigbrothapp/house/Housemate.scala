@@ -83,7 +83,7 @@ object Housemate {
         if (mate.house.housemates.size == 1) {
           val winner = mate.house.housemates(0)
           Sequence(
-            mate.house.bigBrothapp.winner /+ winner.contestant,
+            Let(mate.house.bigBrothapp.winner += winner.contestant),
             Abandon(winner))
         }
         else

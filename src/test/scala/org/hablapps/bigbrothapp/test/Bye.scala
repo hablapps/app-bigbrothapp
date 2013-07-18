@@ -25,6 +25,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.hablapps.updatable._
 import org.hablapps.react
 import org.hablapps.speech
+import speech._
 import org.hablapps.bigbrothapp._
 
 class Bye(sys: speech.System with BigBrothappProgram with react.Debug) extends FunSpec with ShouldMatchers with BeforeAndAfter {
@@ -39,15 +40,15 @@ class Bye(sys: speech.System with BigBrothappProgram with react.Debug) extends F
       leoAtHouse: $[Housemate],
       rapAtHouse: $[Housemate],
       shrAtHouse: $[Housemate]) = reset(for {
-        sea <- Initiate(BigBrothapp());
-        hou <- Initiate(House(), sea);
-        aud <- Initiate(Audience(), sea);
-        leonardo <- Play(Contestant().name += "leonardo", sea);
-        raphael <- Play(Contestant().name += "raphael", sea);
-        shredder <- Play(Contestant().name += "shredder", sea);
-        brotha <- Play(BigBrotha(), hou);
-        leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou);
-        rapAtHouse <- Play(Housemate().name += "raphael", raphael, hou);
+        sea <- Initiate(BigBrothapp())
+        hou <- Initiate(House(), sea)
+        aud <- Initiate(Audience(), sea)
+        leonardo <- Play(Contestant().name += "leonardo", sea)
+        raphael <- Play(Contestant().name += "raphael", sea)
+        shredder <- Play(Contestant().name += "shredder", sea)
+        brotha <- Play(BigBrotha(), hou)
+        leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou)
+        rapAtHouse <- Play(Housemate().name += "raphael", raphael, hou)
         shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou)
       } yield (hou, brotha, leoAtHouse, rapAtHouse, shrAtHouse))
 
@@ -64,14 +65,20 @@ class Bye(sys: speech.System with BigBrothappProgram with react.Debug) extends F
         hou))
 
       reset(for {
-        sea <- Initiate(BigBrothapp());
-        hou <- Initiate(House(), sea);
-        aud <- Initiate(Audience(), sea);
-        leonardo <- Play(Contestant().name += "leonardo", sea);
-        raphael <- Play(Contestant().name += "raphael", sea);
-        shredder <- Play(Contestant().name += "shredder", sea);
-        brotha <- Play(BigBrotha(), hou);
-        _ <- sea.winner /+ shredder
+        sea <- Initiate(BigBrothapp())
+        _ <- Let(sea.date_updated += default_date)
+        hou <- Initiate(House(), sea)
+        _ <- Let(hou.date_updated += default_date)
+        aud <- Initiate(Audience(), sea)
+        leonardo <- Play(Contestant().name += "leonardo", sea)
+        _ <- Let(leonardo.date_updated += default_date)
+        raphael <- Play(Contestant().name += "raphael", sea)
+        _ <- Let(raphael.date_updated += default_date)
+        shredder <- Play(Contestant().name += "shredder", sea)
+        _ <- Let(shredder.date_updated += default_date)
+        brotha <- Play(BigBrotha(), hou)
+        _ <- Let(brotha.date_updated += default_date)
+        _ <- Let(sea.winner += shredder)
       } yield ())
 
 	    obtained should be(getState)

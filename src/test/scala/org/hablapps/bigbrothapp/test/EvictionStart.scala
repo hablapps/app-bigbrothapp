@@ -25,6 +25,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.hablapps.updatable._
 import org.hablapps.react
 import org.hablapps.speech
+import speech._
 import org.hablapps.bigbrothapp._
 
 class EvictionStart(sys: speech.System with BigBrothappProgram with react.Debug) extends FunSpec with ShouldMatchers with BeforeAndAfter {
@@ -36,20 +37,20 @@ class EvictionStart(sys: speech.System with BigBrothappProgram with react.Debug)
     val Output(
       brotha: $[BigBrotha],
       hou: $[House]) = reset(for {
-        sea <- Initiate(BigBrothapp());
-        hou <- Initiate(House(), sea);
-        aud <- Initiate(Audience(), sea);
-        leonardo <- Play(Contestant().name += "leonardo", sea);
-        raphael <- Play(Contestant().name += "raphael", sea);
-        redRanger <- Play(Contestant().name += "redRanger", sea);
-        shredder <- Play(Contestant().name += "shredder", sea);
-        brotha <- Play(BigBrotha(), hou);
-        leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou);
-        rapAtHouse <- Play(Housemate().name += "raphael", raphael, hou);
-        redAtHouse <- Play(Housemate().name += "redRanger", redRanger, hou);
-        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou);
-        _ <- Play(Viewer(), aud);
-        _ <- Play(Viewer(), aud);
+        sea <- Initiate(BigBrothapp())
+        hou <- Initiate(House(), sea)
+        aud <- Initiate(Audience(), sea)
+        leonardo <- Play(Contestant().name += "leonardo", sea)
+        raphael <- Play(Contestant().name += "raphael", sea)
+        redRanger <- Play(Contestant().name += "redRanger", sea)
+        shredder <- Play(Contestant().name += "shredder", sea)
+        brotha <- Play(BigBrotha(), hou)
+        leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou)
+        rapAtHouse <- Play(Housemate().name += "raphael", raphael, hou)
+        redAtHouse <- Play(Housemate().name += "redRanger", redRanger, hou)
+        shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou)
+        _ <- Play(Viewer(), aud)
+        _ <- Play(Viewer(), aud)
         _ <- Play(Viewer(), aud)
         } yield (brotha, hou))
 
@@ -61,35 +62,46 @@ class EvictionStart(sys: speech.System with BigBrothappProgram with react.Debug)
       	hou))
 
       reset(for {
-        sea <- Initiate(BigBrothapp());
-        hou <- Initiate(House(), sea);
-        aud <- Initiate(Audience(), sea);
-        leonardo <- Play(Contestant().name += "leonardo", sea);
-        raphael <- Play(Contestant().name += "raphael", sea);
-        redRanger <- Play(Contestant().name += "redRanger", sea);
-        shredder <- Play(Contestant().name += "shredder", sea);
-        brotha <- Play(BigBrotha(), hou);
-        leoHM <- Play(Housemate().name += "leonardo", leonardo, hou);
-        rapHM <- Play(Housemate().name += "raphael", raphael, hou);
-        redHM <- Play(Housemate().name += "redRanger", redRanger, hou);
-        shrHM <- Play(Housemate().name += "shredder", shredder, hou);
-        _ <- Play(Viewer(), aud);
-        _ <- Play(Viewer(), aud);
-        _ <- Play(Viewer(), aud);
+        sea <- Initiate(BigBrothapp())
+        hou <- Initiate(House(), sea)
+        aud <- Initiate(Audience(), sea)
+        leonardo <- Play(Contestant().name += "leonardo", sea)
+        raphael <- Play(Contestant().name += "raphael", sea)
+        redRanger <- Play(Contestant().name += "redRanger", sea)
+        shredder <- Play(Contestant().name += "shredder", sea)
+        brotha <- Play(BigBrotha(), hou)
+        leoHM <- Play(Housemate().name += "leonardo", leonardo, hou)
+        rapHM <- Play(Housemate().name += "raphael", raphael, hou)
+        redHM <- Play(Housemate().name += "redRanger", redRanger, hou)
+        shrHM <- Play(Housemate().name += "shredder", shredder, hou)
+        _ <- Play(Viewer(), aud)
+        _ <- Play(Viewer(), aud)
+        _ <- Play(Viewer(), aud)
         su <- Say(
           EvictionSetUp(__new = Option(Eviction().substatus += Nominating)),
           brotha, 
-          hou);
+          hou)
         _ <- Done(su, PERFORMED)
-        evict <- Initiate(Eviction().substatus += Nominating, hou);
-        leoNom <- Initiate(Nomination().name += "leonardo", evict);
-        _ <- Play3(Nominee().name += "leonardo", leoHM, leoNom);
-        rapNom <- Initiate(Nomination().name += "raphael", evict);
-        _ <- Play3(Nominee().name += "raphael", rapHM, rapNom);
-        redNom <- Initiate(Nomination().name += "redRanger", evict);
-        _ <- Play3(Nominee().name += "redRanger", redHM, redNom);
-        shrNom <- Initiate(Nomination().name += "shredder", evict);
+        evict <- Initiate(Eviction().substatus += Nominating, hou)
+        leoNom <- Initiate(Nomination().name += "leonardo", evict)
+        _ <- Play3(Nominee().name += "leonardo", leoHM, leoNom)
+        rapNom <- Initiate(Nomination().name += "raphael", evict)
+        _ <- Play3(Nominee().name += "raphael", rapHM, rapNom)
+        redNom <- Initiate(Nomination().name += "redRanger", evict)
+        _ <- Play3(Nominee().name += "redRanger", redHM, redNom)
+        shrNom <- Initiate(Nomination().name += "shredder", evict)
         _ <- Play3(Nominee().name += "shredder", shrHM, shrNom)
+        _ <- Let(hou.date_updated += default_date)
+        _ <- Let(leoHM.date_updated += default_date)
+        _ <- Let(rapHM.date_updated += default_date)
+        _ <- Let(redHM.date_updated += default_date)
+        _ <- Let(shrHM.date_updated += default_date)
+        _ <- Let(brotha.date_updated += default_date)
+        _ <- Let(evict.date_updated += default_date)
+        _ <- Let(leoNom.date_updated += default_date)
+        _ <- Let(rapNom.date_updated += default_date)
+        _ <- Let(redNom.date_updated += default_date)
+        _ <- Let(shrNom.date_updated += default_date)
       } yield ())
 
       obtained should be(getState)

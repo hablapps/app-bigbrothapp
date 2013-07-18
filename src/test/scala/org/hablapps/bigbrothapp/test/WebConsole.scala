@@ -14,39 +14,39 @@
  * limitations under the License.
  */
 
-package org.hablapps.bigbrothapp.test
+// package org.hablapps.bigbrothapp.test
 
-import org.hablapps.{ updatable, react, speech, bigbrothapp }
-import updatable._
-import speech.web
+// import org.hablapps.{ updatable, react, speech, bigbrothapp }
+// import updatable._
+// import speech.web
 
-object WebConsole extends App {
+// object WebConsole extends App {
 
-  object System extends web.PlainSystem with bigbrothapp.BigBrothappProgram {
-    longPollingWaitTime = 15000
+//   object System extends web.PlainSystem with bigbrothapp.BigBrothappProgram {
+//     longPollingWaitTime = 15000
 
-    applicationFilesPath = "static/"
+//     applicationFilesPath = "static/"
 
-    val Output(habla) = reset(for {
-      sea <- Initiate(BigBrothapp().name += "bigBrothapp");
-      hou <- Initiate(House().name += "house", sea);
-      aud <- Initiate(Audience().name += "audience", sea);
-      red <- Play(Contestant().name += "red", sea);
-      blue <- Play(Contestant().name += "blue", sea);
-      green <- Play(Contestant().name += "green", sea);
-      yellow <- Play(Contestant().name += "yellow", sea);
-      brotha <- Play(BigBrotha().name += "brotha", hou);
-      redAtHouse <- Play(Housemate().name += "red", red, hou);
-      blueAtHouse <- Play(Housemate().name += "blue", blue, hou);
-      greenAtHouse <- Play(Housemate().name += "green", green, hou);
-      yellowAtHouse <- Play(Housemate().name += "yellow", yellow, hou);
-      _ <- Play(Viewer().name += "viewer1", aud);
-      _ <- Play(Viewer().name += "viewer2", aud);
-      _ <- Play(Viewer().name += "viewer3", aud)
-    } yield ())
+//     val Output(habla) = reset(for {
+//       sea <- Initiate(BigBrothapp().name += "bigBrothapp");
+//       hou <- Initiate(House().name += "house", sea);
+//       aud <- Initiate(Audience().name += "audience", sea);
+//       red <- Play(Contestant().name += "red", sea);
+//       blue <- Play(Contestant().name += "blue", sea);
+//       green <- Play(Contestant().name += "green", sea);
+//       yellow <- Play(Contestant().name += "yellow", sea);
+//       brotha <- Play(BigBrotha().name += "brotha", hou);
+//       redAtHouse <- Play(Housemate().name += "red", red, hou);
+//       blueAtHouse <- Play(Housemate().name += "blue", blue, hou);
+//       greenAtHouse <- Play(Housemate().name += "green", green, hou);
+//       yellowAtHouse <- Play(Housemate().name += "yellow", yellow, hou);
+//       _ <- Play(Viewer().name += "viewer1", aud);
+//       _ <- Play(Viewer().name += "viewer2", aud);
+//       _ <- Play(Viewer().name += "viewer3", aud)
+//     } yield ())
    
-    turn_on_log = true
-  }
+//     turn_on_log = true
+//   }
 
-  System.launch
-}
+//   System.launch
+// }

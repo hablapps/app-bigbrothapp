@@ -81,7 +81,7 @@ object Nominator {
         if (mates.size == cnt) {
           Sequence(
             GetReadyForVotation(nominator.nomination.eviction),
-            nVal.nomination.eviction.substatus /+ Polling)
+            Let(nVal.nomination.eviction.substatus += Polling))
         }
         else
           ActionId() // not everyone has posted a nomination yet
