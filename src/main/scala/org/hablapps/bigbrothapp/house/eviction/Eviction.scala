@@ -82,10 +82,10 @@ object Eviction {
     //
     declarer[BigBrotha].of[Eviction](Eviction._substatus)
       .empowered {
-        case _ => implicit state => true
+        case _ => true
       }
       .permitted {
-        case _ => implicit state => Some(true)
+        case _ => Some(true)
       }
 
     when {
@@ -111,9 +111,9 @@ object Eviction {
 
     when {
       case New(evict: $[Eviction] @unchecked, eVal: Eviction) => {
-        implicit state => For(eVal.house.housemates) {
+        For(eVal.house.housemates) {
           case mate: $[Housemate] => {
-            implicit state => AndNext(
+            AndNext(
               Initiate2(Nomination(_name = mate.name), evict),
               {
                 case New(nom: $[Nomination], _) =>
