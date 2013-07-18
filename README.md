@@ -43,21 +43,10 @@ and clone the app-bigbrothapp repository.
 > git clone https://github.com/hablapps/app-bigbrothapp.git
 ```
 
-#### Install scala 
-
-Speech is implemented as an embedded DSL in Scala, so you must
-download it first. Follow the instructions at <http://scala-lang.org>.
-
 #### Install sbt 
 
 The app-bigbrothapp project is configured with the sbt build tool. To
 install sbt follow the instructions at <https://github.com/sbt/sbt>.
-
-#### Install speech 
-
-Download the Speech interpreter from the following address:
-<http://speechlang.org>. Then, simply create a `<bigbrothapp>/lib`
-directory, and install there the `speech.jar` archive.
 
 #### Compile bigbrothapp
 
@@ -72,7 +61,7 @@ $ sbt
 From sbt, you can run some tests with the `test` command:
 
 ```shell
-> test
+> test-only org.hablapps.bigbrothapp.test.All_BigBrothapp
 ...
 ```
 
