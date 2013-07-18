@@ -63,9 +63,6 @@ object Eviction {
     
       def house = context.head
 
-      def NewE = implicitly[Evidence[Eviction]]
-      def BuilderE: Builder[Eviction] = Eviction
-
       override def empowered(implicit state: State) =
         ! house.subinteraction.isDefined
     }

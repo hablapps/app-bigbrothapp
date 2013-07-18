@@ -57,9 +57,6 @@ object Nominator {
       def nomination = context.head
       def eviction = nomination.context.head
       def housemate = performer.get
-    
-      def NewE = implicitly[Evidence[Nominator]]
-      def BuilderE: Builder[Nominator] = Nominator
 
       override def empowered(implicit state: State) =
         (eviction.substatus == Option(Nominating)) &&

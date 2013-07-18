@@ -52,9 +52,6 @@ object Voter {
       def viewer = performer.get
       def nomination = context.get
 
-      def NewE = implicitly[Evidence[Voter]]
-      def BuilderE: Builder[Voter] = Voter
-
       override def empowered(implicit state: State) =
         (nomination.eviction.substatus.get == Polling) && 
           (viewer.votating.size == 0)
