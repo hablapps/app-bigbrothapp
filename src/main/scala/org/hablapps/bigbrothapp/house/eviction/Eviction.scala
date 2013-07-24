@@ -89,7 +89,7 @@ object Eviction {
       }
 
     when {
-      case _Set(e: $[Eviction], Eviction._substatus, CountingUp, true) => {
+      case Eviction._substatus(e: $[Eviction], CountingUp, true) => {
         implicit state => {
           val res = e.nominees.sortBy { n =>
             n.nomination.voters.size
