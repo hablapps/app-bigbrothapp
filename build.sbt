@@ -17,10 +17,8 @@ resolvers in ThisBuild ++= Seq(
   "Another maven repo" at "http://mavenhub.com/")
 
 libraryDependencies ++= Seq(
-  "org.hablapps" %% "speech-web" % "0.7.1-20130718165655-8581-8582",
+  "org.hablapps" %% "speech-web" % "0.7.1-20130725111639-8703-8708",
   "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test",
   "junit" % "junit" % "4.10" % "test")
 
-initialCommands in console := "import org.hablapps.{ updatable, react, speech}, updatable._"
-
-fork in (Test,run) := true
+initialCommands in console := "import org.hablapps.{ updatable, react, speech }, updatable._"

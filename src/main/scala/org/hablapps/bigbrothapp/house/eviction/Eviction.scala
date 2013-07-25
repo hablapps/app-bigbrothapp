@@ -27,38 +27,35 @@ object Eviction {
 
   trait State { self: speech.Program with BigBrothappProgram =>
 
-	  trait Eviction extends Interaction {
-	    type This = Eviction
-	    type Substatus = EvictionSubstatus
-	    type ContextCol[x] = Option[x]
-	    type Context = House
-	    type SubinteractionCol[x] = List[x]
-	    type Subinteraction = Nomination
-	    type MemberCol[x] = Traversable[x]
-	    type Member = Nothing
-	    type EnvironmentCol[x] = Traversable[x]
-	    type Environment = Nothing
-	    type ActionCol[x] = Traversable[x]
-	    type Action = SocialAction
+    trait Eviction extends Interaction {
+      type This = Eviction
+      type Substatus = EvictionSubstatus
+      type ContextCol[x] = Option[x]
+      type Context = House
+      type SubinteractionCol[x] = List[x]
+      type Subinteraction = Nomination
+      type Action = SocialAction
 
-	    def house = context.get
-      def nominations = subinteraction.alias[Nomination]
+      def house = context.get
+
+      def nominations = alias[Nomination, Eviction](subinteraction)
+
       def nominees(implicit state: State) = 
         for (n <- nominations) yield n.nominee
+
       def nominators(implicit state: State) = 
         nominations flatMap { n => n.nominators }
+
       def voters(implicit state: State) =
         nominations flatMap { n => n.voters }
-	  }
-				  
+    }
+          
     implicit val Eviction = builder[Eviction]
 
     trait EvictionSetUp extends SetUp {
       type This = EvictionSetUp
-      type Substatus = Nothing
       type Context = House
       type Performer = BigBrotha
-      type Addressee = Nothing
       type New = Eviction
     
       def house = context.head
@@ -78,8 +75,6 @@ object Eviction {
 
   trait Rules { self: speech.Program with BigBrothappProgram =>
 
-    // This is not working at all!
-    //
     declarer[BigBrotha].of[Eviction](Eviction._substatus)
       .empowered {
         case _ => true

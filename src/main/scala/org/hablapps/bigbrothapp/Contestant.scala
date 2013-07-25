@@ -26,17 +26,12 @@ object Contestant {
 
   trait State { self: speech.Program with BigBrothappProgram =>
 
-	trait Contestant extends Agent {
-	  type This = Contestant
-	  type Substatus = Nothing
-	  type Context = BigBrothapp
-	  type PlayerCol[x] = Traversable[x]
-	  type Player = Nothing
-	  type RoleCol[x] = Set[x]
-	  type Role = Housemate
-	  type PerformCol[x] = Traversable[x]
-	  type Perform = Nothing
-	}
+    trait Contestant extends Agent {
+      type This = Contestant
+      type Context = BigBrothapp
+      type RoleCol[x] = Set[x]
+      type Role = Housemate
+    }
 
     implicit val Contestant = builder[Contestant]
   }

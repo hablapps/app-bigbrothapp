@@ -29,17 +29,14 @@ object Nominee {
 
 	trait Nominee extends Agent {
 	  type This = Nominee
-	  type Substatus = Nothing
 	  type Context = Nomination
 	  type PlayerCol[x] = Option[x]
 	  type Player = Housemate
-	  type RoleCol[x] = Traversable[x]
-	  type Role = Nothing
-	  type PerformCol[x] = Traversable[x]
-	  type Perform = Nothing
 
 	  def housemate = player.get
+
 	  def nomination = context.get
+	  
 	  def voters = nomination.voters
 	}
 				  

@@ -29,27 +29,21 @@ object Voter {
 
     trait Voter extends Agent {
       type This = Voter
-      type Substatus = Nothing
       type Context = Nomination
       type PlayerCol[x] = Option[x]
       type Player = Viewer
-      type RoleCol[x] = Traversable[x]
-      type Role = Nothing
-      type PerformCol[x] = Traversable[x]
-      type Perform = Nothing
 	  }
 				  
     implicit val Voter = builder[Voter]
 
     trait CastVote extends Join {
       type This = CastVote
-      type Substatus = Nothing
       type Context = Nomination
       type Performer = Viewer
-      type Addressee = Nothing
       type New = Voter
 
       def viewer = performer.get
+      
       def nomination = context.get
 
       override def empowered(implicit state: State) =

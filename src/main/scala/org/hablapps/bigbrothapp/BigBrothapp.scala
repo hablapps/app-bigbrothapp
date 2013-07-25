@@ -27,22 +27,14 @@ object BigBrothapp {
 
     trait BigBrothapp extends Interaction {
       type This = BigBrothapp
-      type Substatus = Nothing
-      type ContextCol[x] = Traversable[x]
-      type Context = Nothing
-      type SubinteractionCol[x] = Traversable[x]
       type Subinteraction = Interaction
-      type MemberCol[x] = Traversable[x]
       type Member = Contestant
-      type EnvironmentCol[x] = Traversable[x]
-      type Environment = Nothing
-      type ActionCol[x] = Traversable[x]
-      type Action = Nothing
 
       val winner: Option[$[Contestant]]
 
-      def house = subinteraction.alias[House].head
-      def audience = subinteraction.alias[Audience].head
+      def house = alias[House, BigBrothapp](subinteraction).head
+
+      def audience = alias[Audience, BigBrothapp](subinteraction)
     }
 
     implicit val BigBrothapp = builder[BigBrothapp]

@@ -29,16 +29,12 @@ object Nominator {
 
     trait Nominator extends Agent {
       type This = Nominator
-      type Substatus = Nothing
       type Context = Nomination
       type PlayerCol[x] = Option[x]
       type Player = Housemate
-      type RoleCol[x] = Traversable[x]
-      type Role = Nothing
-      type PerformCol[x] = Traversable[x]
-      type Perform = Nothing
 
       def housemate = player.get
+
       def nomination = context.get
     }
 				  
@@ -46,16 +42,16 @@ object Nominator {
 
     trait Nominate extends Join {
       type This = Nominate
-      type Substatus = Nothing
       type Context = Nomination
       type Performer = Housemate
-      type Addressee = Nothing
       type New = Nominator
 
       val reason: String
 
       def nomination = context.head
+
       def eviction = nomination.context.head
+      
       def housemate = performer.get
 
       override def empowered(implicit state: State) =

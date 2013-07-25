@@ -27,27 +27,25 @@ object Housemate {
 
   trait State { self: speech.Program with BigBrothappProgram =>
 
-  	trait Housemate extends Agent {
-  	  type This = Housemate
-  	  type Substatus = Nothing
-  	  type Context = House
-  	  type PlayerCol[x] = Option[x]
-  	  type Player = Contestant
-  	  type RoleCol[x] = List[x]
-  	  type Role = Agent @Union[Nominee, Nominator]
-  	  type PerformCol[x] = Traversable[x]
-  	  type Perform = SocialAction
+    trait Housemate extends Agent {
+      type This = Housemate
+      type Context = House
+      type PlayerCol[x] = Option[x]
+      type Player = Contestant
+      type Role = Agent @Union[Nominee, Nominator]
+      type Perform = SocialAction
 
       def contestant = player.get
-      def nominating = role.alias[Nominator]
+
+      def nominating = alias[Nominator, Housemate](role)
+
       def house = context.get
-  	}
+    }
 
     implicit val Housemate = builder[Housemate]
 
     trait FireHousemate extends Fire {
       type This = FireHousemate
-      type Substatus = Nothing
       type Context = House
       type Performer = BigBrotha
       type Addressee = Nothing
@@ -63,7 +61,6 @@ object Housemate {
 
     trait LeaveHousemate extends Leave {
       type This = LeaveHousemate
-      type Substatus = Nothing
       type Context = House
       type Performer = Housemate
       type Addressee = Nothing
@@ -78,7 +75,7 @@ object Housemate {
   }
 
   trait Rules{ self: speech.Program with BigBrothappProgram => 
-	  when {
+    when {
       case Deleted(_, mate: Housemate) => implicit state => {
         if (mate.house.housemates.size == 1) {
           val winner = mate.house.housemates(0)

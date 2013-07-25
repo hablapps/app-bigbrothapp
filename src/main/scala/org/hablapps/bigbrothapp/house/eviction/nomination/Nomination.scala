@@ -27,26 +27,23 @@ object Nomination {
 
   trait State { self: speech.Program with BigBrothappProgram =>
 
-	trait Nomination extends Interaction {
-	  type This = Nomination
-	  type Substatus = Nothing
-	  type ContextCol[x] = Option[x]
-	  type Context = Eviction
-	  type SubinteractionCol[x] = Traversable[x]
-	  type Subinteraction = Nothing
-	  type MemberCol[x] = Traversable[x]
-	  type Member = Agent // @Union[Nominee, Nominator, Voter]
-	  type EnvironmentCol[x] = Traversable[x]
-	  type Environment = Nothing
-	  type ActionCol[x] = Traversable[x]
-	  type Action = SocialAction
+    trait Nomination extends Interaction {
+      type This = Nomination
+      type ContextCol[x] = Option[x]
+      type Context = Eviction
+      type MemberCol[x] = List[x]
+      type Member = Agent
+      type Action = SocialAction
 
-	  def nominee = member.alias[Nominee].head
-	  def nominators = member.alias[Nominator]
-	  def voters = member.alias[Voter]
-	  def eviction = context.head
-	}
-				  
+      def nominee = alias[Nominee, Nomination](member).head
+
+      def nominators = alias[Nominator, Nomination](member)
+
+      def voters = alias[Voter, Nomination](member)
+      
+      def eviction = context.head
+    }
+                  
     implicit val Nomination = builder[Nomination]
   }
 }

@@ -27,24 +27,23 @@ object House {
 
   trait State { self: speech.Program with BigBrothappProgram =>
 
-	trait House extends Interaction {
-	  type This = House
-	  type Substatus = Nothing
-	  type ContextCol[x] = Option[x]
-	  type Context = BigBrothapp
-	  type SubinteractionCol[x] = Option[x]
-	  type Subinteraction = Eviction
-	  type MemberCol[x] = List[x]
-	  type Member = Agent@Union[BigBrotha, Housemate]
-	  type EnvironmentCol[x] = Traversable[x]
-	  type Environment = Nothing
-	  type ActionCol[x] = List[x]
-	  type Action = SocialAction
+    trait House extends Interaction {
+      type This = House
+      type ContextCol[x] = Option[x]
+      type Context = BigBrothapp
+      type SubinteractionCol[x] = Option[x]
+      type Subinteraction = Eviction
+      type MemberCol[x] = List[x]
+      type Member = Agent@Union[BigBrotha, Housemate]
+      type ActionCol[x] = List[x]
+      type Action = SocialAction
 
-	  def bigBrothapp = context.head
-	  def eviction = subinteraction.get
-	  def housemates = member.alias[Housemate]
-	}
+      def bigBrothapp = context.head
+
+      def eviction = subinteraction.get
+      
+      def housemates = alias[Housemate, House](member)
+    }
 
     implicit val House = builder[House]
   }

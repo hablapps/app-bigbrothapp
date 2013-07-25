@@ -29,13 +29,7 @@ object BigBrotha {
 
 	trait BigBrotha extends Agent {
 	  type This = BigBrotha
-	  type Substatus = Nothing
 	  type Context = House
-	  type PlayerCol[x] = Traversable[x]
-	  type Player = Nothing
-	  type RoleCol[x] = Traversable[x]
-	  type Role = Nothing
-	  type PerformCol[x] = Traversable[x]
 	  type Perform = SocialAction
 	}
 				  
