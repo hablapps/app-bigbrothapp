@@ -32,7 +32,6 @@ object `package` {
       with audience.Audience.State
       with audience.Viewer.State
       with house.eviction.Eviction.State
-      with house.eviction.Eviction.Actions
       with house.eviction.Eviction.Rules
       with house.eviction.nomination.Nomination.State
       with house.eviction.nomination.Nominee.State

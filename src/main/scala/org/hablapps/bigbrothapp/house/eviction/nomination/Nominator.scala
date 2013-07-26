@@ -84,35 +84,23 @@ object Nominator {
 
   trait Actions { self: speech.Program with BigBrothappProgram => 
 
-  case class FreeNominees(eviction: $[Eviction]) extends DefinedAction(
+  case class GetReadyForVotation(eviction: $[Eviction]) extends DefinedAction(
     implicit state => {
       
       val bound = (eviction.nominees map { n => 
         n.nomination.nominators.size
       }).sorted.reverse(1)
 
-      For(eviction.nominees.filter { n => 
-        n.nomination.nominators.size < bound
-      }) {
-        case n => Abandon(n)
+      For(eviction.nominees) {
+        case n => implicit state => {
+          if (n.nomination.nominators.size < bound) 
+            RecFinish(n.nomination)
+          else
+            For(n.nomination.nominators) { 
+              case nt => Abandon(nt) 
+            }
+        }
       }
     })
-
-  case class FreeNominators(eviction: $[Eviction]) extends DefinedAction(
-    For(eviction.nominators) {
-      case n => Abandon(n)
-    })
-
-  case class FreeNominations(eviction: $[Eviction]) extends DefinedAction(
-    For(eviction.nominations filter { _.member.isEmpty }) {
-      case n => Finish(n)
-    })
-
-  case class GetReadyForVotation(eviction: $[Eviction]) extends DefinedAction(
-    Sequence(
-      FreeNominees(eviction), 
-      FreeNominators(eviction),
-      FreeNominations(eviction)))
   }
-
 }

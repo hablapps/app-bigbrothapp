@@ -91,7 +91,7 @@ object Eviction {
           }.reverse
           val bye = res(0).housemate
           Sequence(
-            FreeEviction(e),
+            RecFinish(e),
             Abandon(bye))
         }
       }
@@ -118,30 +118,5 @@ object Eviction {
         }
       }
     }
-  }
-
-  trait Actions { self: speech.Program with BigBrothappProgram => 
-  
-    case class FreePollingNominees(evict: $[Eviction]) extends DefinedAction(
-      For(evict.nominees) {
-        case n => Abandon(n)
-      })
-
-    case class FreeVoters(evict: $[Eviction]) extends DefinedAction(
-      For(evict.voters) {
-        case v => Abandon(v)
-      })
-
-    case class FreePollingNominations(evict: $[Eviction]) extends DefinedAction(
-      For(evict.nominations) {
-        case n => Finish(n)
-      })
-
-    case class FreeEviction(evict: $[Eviction]) extends DefinedAction(
-      Sequence(
-        FreePollingNominees(evict),
-        FreeVoters(evict),
-        FreePollingNominations(evict),
-        Finish(evict)))
   }
 }
