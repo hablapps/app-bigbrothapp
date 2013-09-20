@@ -66,18 +66,12 @@ class Bye(sys: speech.System with BigBrothappProgram with react.Debug) extends F
 
       reset(for {
         sea <- Initiate(BigBrothapp())
-        _ <- Let(sea.date_updated += default_date)
         hou <- Initiate(House(), sea)
-        _ <- Let(hou.date_updated += default_date)
         aud <- Initiate(Audience(), sea)
         leonardo <- Play(Contestant().name += "leonardo", sea)
-        _ <- Let(leonardo.date_updated += default_date)
         raphael <- Play(Contestant().name += "raphael", sea)
-        _ <- Let(raphael.date_updated += default_date)
         shredder <- Play(Contestant().name += "shredder", sea)
-        _ <- Let(shredder.date_updated += default_date)
         brotha <- Play(BigBrotha(), hou)
-        _ <- Let(brotha.date_updated += default_date)
         _ <- Let(sea.winner += shredder)
       } yield ())
 

@@ -146,13 +146,6 @@ class Nominating(sys: speech.System with BigBrothappProgram with react.Debug) ex
         _ <- Abandon(rapAsNominee)
         _ <- Finish(leoNomination)
         _ <- Finish(rapNomination)
-        _ <- Let(leoAtHouse.date_updated += default_date)
-        _ <- Let(rapAtHouse.date_updated += default_date)
-        _ <- Let(redAtHouse.date_updated += default_date)
-        _ <- Let(shrAtHouse.date_updated += default_date)
-        _ <- Let(evict.date_updated += default_date)
-        _ <- Let(shrNomination.date_updated += default_date)
-        _ <- Let(redNomination.date_updated += default_date)
         _ <- Let(evict.substatus += Polling)
       } yield (
         leoAtHouse, 
