@@ -37,6 +37,7 @@ class Bye(sys: speech.System with BigBrothappProgram with react.Debug) extends F
     val Output(
       hou: $[House],
       brotha: $[BigBrotha],
+      leonardo: $[Contestant],
       leoAtHouse: $[Housemate],
       rapAtHouse: $[Housemate],
       shrAtHouse: $[Housemate]) = reset(for {
@@ -50,7 +51,7 @@ class Bye(sys: speech.System with BigBrothappProgram with react.Debug) extends F
         leoAtHouse <- Play(Housemate().name += "leonardo", leonardo, hou)
         rapAtHouse <- Play(Housemate().name += "raphael", raphael, hou)
         shrAtHouse <- Play(Housemate().name += "shredder", shredder, hou)
-      } yield (hou, brotha, leoAtHouse, rapAtHouse, shrAtHouse))
+      } yield (hou, brotha, leonardo, leoAtHouse, rapAtHouse, shrAtHouse))
 
     it("should achieve the polling and countingUp phases") {
 
@@ -59,9 +60,9 @@ class Bye(sys: speech.System with BigBrothappProgram with react.Debug) extends F
         brotha,
         hou))
 
-      val NextState(obtained) = attempt(Say(
-        LeaveHousemate(),
-        leoAtHouse,
+      val NextState(obtained: State) = attempt(Say(
+        LeaveHousemate().old += leoAtHouse,
+        leonardo,
         hou))
 
       reset(for {

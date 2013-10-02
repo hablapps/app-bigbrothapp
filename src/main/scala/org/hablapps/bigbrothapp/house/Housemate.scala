@@ -62,8 +62,9 @@ object Housemate {
     trait LeaveHousemate extends Leave {
       type This = LeaveHousemate
       type Context = House
-      type Performer = Housemate
+      type Performer = Contestant
       type Addressee = Nothing
+      type Old = Housemate
 
       def house = context.get
 

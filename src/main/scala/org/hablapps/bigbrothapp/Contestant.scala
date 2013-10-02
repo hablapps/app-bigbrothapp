@@ -31,6 +31,7 @@ object Contestant {
       type Context = BigBrothapp
       type RoleCol[x] = Set[x]
       type Role = Housemate
+      type Perform = LeaveHousemate
     }
 
     implicit val Contestant = builder[Contestant]
