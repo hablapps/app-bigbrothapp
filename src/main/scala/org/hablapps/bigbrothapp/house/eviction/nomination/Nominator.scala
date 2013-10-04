@@ -73,8 +73,9 @@ object Nominator {
         }
         if (mates.size == cnt) {
           Sequence(
-            GetReadyForVotation(nominator.nomination.eviction),
-            Let(nVal.nomination.eviction.substatus += Polling))
+            GetReadyForVotation(nominator.nomination.eviction)//,
+            //Let(nVal.nomination.eviction.substatus += Polling)
+            )
         }
         else
           ActionId() // not everyone has posted a nomination yet
@@ -100,7 +101,7 @@ object Nominator {
 
   case class FreeNominators(eviction: $[Eviction]) extends DefinedAction(
     For(eviction.nominators) {
-      case n => Abandon(n)
+      case n => implicit state => Abandon(n)
     })
 
   case class FreeNominations(eviction: $[Eviction]) extends DefinedAction(
